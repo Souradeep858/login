@@ -14,7 +14,6 @@ const LoginSignup=()=>{
 
 const handleSubmit = async (type) => {
 
-
   if (type === "Sign Up") {
     if (name === "" || emailVal === "" || passwordVal === "") {
       alert("Please fill all fields");
@@ -48,14 +47,14 @@ const handleSubmit = async (type) => {
       body: JSON.stringify(
         type === "Sign Up"
           ? { name, email: emailVal, password: passwordVal }
-          : { email: emailVal }   // 🔥 no password
+          : { email: emailVal, password: passwordVal }  // 🔥 changed here
       )
     });
 
     const data = await response.json();
 
     console.log("STATUS:", response.status);
-    console.log("RESPONSE DATA:", data);
+    console.log("FULL RESPONSE:", JSON.stringify(data, null, 2));
 
     if (response.ok) {
       alert(`${type} successful`);
@@ -65,7 +64,7 @@ const handleSubmit = async (type) => {
       }
 
     } else {
-      alert("Error: " + (data.message || response.status));
+      alert("Error: " + JSON.stringify(data));
     }
 
   } catch (error) {
