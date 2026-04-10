@@ -20,8 +20,8 @@ const handleSubmit = async (type) => {
       return;
     }
   } else {
-    if (emailVal === "") {
-      alert("Please enter email");
+    if (emailVal === "" || passwordVal === "") {
+      alert("Please fill all fields");
       return;
     }
   }
@@ -43,11 +43,10 @@ const handleSubmit = async (type) => {
       headers: {
         "Content-Type": "application/json"
       },
-
       body: JSON.stringify(
         type === "Sign Up"
           ? { name, email: emailVal, password: passwordVal }
-          : { email: emailVal, password: passwordVal }  // 🔥 changed here
+          : { email: emailVal, password: passwordVal } 
       )
     });
 
@@ -58,11 +57,6 @@ const handleSubmit = async (type) => {
 
     if (response.ok) {
       alert(`${type} successful`);
-
-      if (type === "Login") {
-        alert("OTP sent to your email");
-      }
-
     } else {
       alert("Error: " + JSON.stringify(data));
     }
