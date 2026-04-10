@@ -12,7 +12,7 @@ const LoginSignup=()=>{
   const [emailVal, setEmailVal] = useState("");
   const [passwordVal, setPasswordVal] = useState("");
 
- const handleSubmit = async (type) => {
+const handleSubmit = async (type) => {
 
   if (type === "Sign Up") {
     if (name === "" || emailVal === "" || passwordVal === "") {
@@ -35,26 +35,26 @@ const LoginSignup=()=>{
       endpoint = "/auth/login";
     }
 
-    const response = await fetch(
-      `https://dipvsion-test.onrender.com${endpoint}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+    const url = `https://dipvsion-test.onrender.com${endpoint}`;
+    console.log("Calling API:", url);
 
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
 
-        body: JSON.stringify(
-          type === "Sign Up"
-            ? { name, email: emailVal, password: passwordVal }
-            : { email: emailVal }   
-        )
-      }
-    );
+      body: JSON.stringify(
+        type === "Sign Up"
+          ? { name, email: emailVal, password: passwordVal }
+          : { email: emailVal }   // login = only email
+      )
+    });
 
     const data = await response.json();
 
-    console.log("RESPONSE:", data);
+    console.log("STATUS:", response.status);
+    console.log("RESPONSE DATA:", data);
 
     if (response.ok) {
       alert(`${type} successful`);
@@ -64,15 +64,14 @@ const LoginSignup=()=>{
       }
 
     } else {
-      alert(data.message || "Something went wrong");
+      alert("Error: " + (data.message || response.status));
     }
 
   } catch (error) {
-    console.error(error);
-    alert("Server error");
+    console.error("FULL ERROR:", error);
+    alert("Error: " + error.message);
   }
 };
-
 
     return(
         <div className="container">
