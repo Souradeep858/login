@@ -12,7 +12,7 @@ const LoginSignup=()=>{
   const [emailVal, setEmailVal] = useState("");
   const [passwordVal, setPasswordVal] = useState("");
 
-  const handleSubmit = async (type) => {
+ const handleSubmit = async (type) => {
 
   if (type === "Sign Up") {
     if (name === "" || emailVal === "" || passwordVal === "") {
@@ -20,8 +20,8 @@ const LoginSignup=()=>{
       return;
     }
   } else {
-    if (emailVal === "" || passwordVal === "") {
-      alert("Please fill all fields");
+    if (emailVal === "") {
+      alert("Please enter email");
       return;
     }
   }
@@ -30,9 +30,9 @@ const LoginSignup=()=>{
     let endpoint = "";
 
     if (type === "Sign Up") {
-      endpoint = "/api/signup";  
+      endpoint = "/auth/register";
     } else {
-      endpoint = "/api/login";
+      endpoint = "/auth/login";
     }
 
     const response = await fetch(
@@ -42,19 +42,27 @@ const LoginSignup=()=>{
         headers: {
           "Content-Type": "application/json"
         },
+
+
         body: JSON.stringify(
           type === "Sign Up"
             ? { name, email: emailVal, password: passwordVal }
-            : { email: emailVal, password: passwordVal }
+            : { email: emailVal }   
         )
       }
     );
 
     const data = await response.json();
 
+    console.log("RESPONSE:", data);
+
     if (response.ok) {
       alert(`${type} successful`);
-      console.log(data);
+
+      if (type === "Login") {
+        alert("OTP sent to your email");
+      }
+
     } else {
       alert(data.message || "Something went wrong");
     }
@@ -64,7 +72,6 @@ const LoginSignup=()=>{
     alert("Server error");
   }
 };
-
 
 
     return(
