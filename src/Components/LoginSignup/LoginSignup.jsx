@@ -14,7 +14,7 @@ const LoginSignup=()=>{
 
 const handleSubmit = async (type) => {
 
-  // ✅ Correct validation
+
   if (type === "Sign Up") {
     if (name === "" || emailVal === "" || passwordVal === "") {
       alert("Please fill all fields");
@@ -30,7 +30,6 @@ const handleSubmit = async (type) => {
   try {
     let endpoint = "";
 
-    // ✅ FIXED endpoints
     if (type === "Sign Up") {
       endpoint = "/auth/register";
     } else {
@@ -46,7 +45,6 @@ const handleSubmit = async (type) => {
         "Content-Type": "application/json"
       },
 
-      // ✅ FIXED body
       body: JSON.stringify(
         type === "Sign Up"
           ? { name, email: emailVal, password: passwordVal }
