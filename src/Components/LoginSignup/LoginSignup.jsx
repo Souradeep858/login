@@ -47,6 +47,7 @@ const handleSubmit = async (type) => {
         type === "Sign Up"
           ? { name, email: emailVal, password: passwordVal }
           : { email: emailVal, password: passwordVal } 
+          //
       )
     });
 
